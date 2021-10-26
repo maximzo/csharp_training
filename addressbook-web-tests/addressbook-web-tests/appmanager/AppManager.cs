@@ -21,6 +21,8 @@ namespace WebAddressbookTests
 
         public AppManager()
         {
+            driver = new EdgeDriver();
+            baseURL = "http://localhost";
             loginHelper = new LoginHelper(driver);
             navigator = new NavigationHelper(driver, baseURL);
             groupsHelper = new GroupsHelper(driver);
