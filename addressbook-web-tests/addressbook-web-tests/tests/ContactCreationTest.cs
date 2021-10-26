@@ -21,6 +21,7 @@ namespace WebAddressbookTests
             contact.Nickname = "Ozzy";
             contact.Title = "Singer, Songwriter";
             contact.Company = "Black Sabbath";
+            app.Contact.FillContactForms(contact);
             app.Contact.SubmitContactCreation();
             app.Auth.Logout();
         }
