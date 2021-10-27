@@ -16,11 +16,18 @@ namespace WebAddressbookTests
             group.Header = "some_header";
             group.Footer = "some_footer";
 
-            app.Navigator.GoToGroupPage();
-            app.Groups.InitNewGroupCreation();
-            app.Groups.FillGroupForms(group);
-            app.Groups.SubmitGroupCreation();
-            app.Groups.ReturnToGroupPage();
+            app.Groups.Create(group);
+            app.Auth.Logout();
+        }
+
+        [Test]
+        public void EmptyGroupCreationTest()
+        {
+            GroupData group = new GroupData("");
+            group.Header = "";
+            group.Footer = "";
+
+            app.Groups.Create(group);
             app.Auth.Logout();
         }
     }

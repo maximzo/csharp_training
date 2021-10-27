@@ -23,10 +23,19 @@ namespace WebAddressbookTests
         {
             driver = new EdgeDriver();
             baseURL = "http://localhost";
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupsHelper = new GroupsHelper(driver);
-            contactHelper = new ContactHelper(driver);
+
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this, baseURL);
+            groupsHelper = new GroupsHelper(this);
+            contactHelper = new ContactHelper(this);
+        }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
+            }
         }
 
         public void Stop()
