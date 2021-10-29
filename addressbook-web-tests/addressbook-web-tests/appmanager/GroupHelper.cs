@@ -9,14 +9,14 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
-    public class GroupsHelper : HelperBase
+    public class GroupHelper : HelperBase
     {
 
-        public GroupsHelper(AppManager manager) : base(manager)
+        public GroupHelper(AppManager manager) : base(manager)
         {
         }
 
-        public GroupsHelper Create(GroupData group)
+        public GroupHelper Create(GroupData group)
         {
             manager.Navigator.GoToGroupPage();
             InitNewGroupCreation();
@@ -26,22 +26,45 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupsHelper Remove(int v)
+        public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
-            SelectGroup(1);
+            SelectGroup(v);
+            InitGroupMod();
+            FillGroupForms(newData);
+            SubmitGroupMod();
+            ReturnToGroupPage();
+            return this;
+        }
+
+        public GroupHelper SubmitGroupMod()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public GroupHelper InitGroupMod()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
+        public GroupHelper Remove(int v)
+        {
+            manager.Navigator.GoToGroupPage();
+            SelectGroup(v);
             RemoveGroup();
             ReturnToGroupPage();
             return this;
         }
 
-        public GroupsHelper InitNewGroupCreation()
+        public GroupHelper InitNewGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
             return this;
         }
 
-        public GroupsHelper FillGroupForms(GroupData group)
+        public GroupHelper FillGroupForms(GroupData group)
         {
             driver.FindElement(By.Name("group_name")).Clear();
             driver.FindElement(By.Name("group_name")).SendKeys(group.Name);
@@ -52,25 +75,25 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupsHelper SubmitGroupCreation()
+        public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
             return this;
         }
 
-        public GroupsHelper SelectGroup(int index)
+        public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
 
-        public GroupsHelper RemoveGroup()
+        public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[5]")).Click();
             return this;
         }
 
-        public GroupsHelper ReturnToGroupPage()
+        public GroupHelper ReturnToGroupPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
             return this;

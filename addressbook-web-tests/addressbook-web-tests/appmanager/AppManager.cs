@@ -16,7 +16,7 @@ namespace WebAddressbookTests
 
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
-        protected GroupsHelper groupsHelper;
+        protected GroupHelper groupsHelper;
         protected ContactHelper contactHelper;
 
         public AppManager()
@@ -26,7 +26,7 @@ namespace WebAddressbookTests
 
             loginHelper = new LoginHelper(this);
             navigator = new NavigationHelper(this, baseURL);
-            groupsHelper = new GroupsHelper(this);
+            groupsHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
         }
 
@@ -66,7 +66,7 @@ namespace WebAddressbookTests
             }
         }
 
-        public GroupsHelper Groups
+        public GroupHelper Groups
         {
             get
             {
