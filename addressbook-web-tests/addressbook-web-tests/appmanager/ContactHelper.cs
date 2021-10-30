@@ -25,12 +25,32 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.Id(index)).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td/input")).Click();
             return this;
         }
+
+        public ContactHelper Modify(int v, ContactData contactEdit)
+        {
+            InitContactMod(v);
+            FillContactForms(contactEdit);
+            SubmitContactMod();
+            return this;
+        }
+        public ContactHelper InitContactMod(int editindex)
+        {
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + editindex + "]/td[8]/a/img")).Click();
+            return this;
+        }
+        public ContactHelper SubmitContactMod()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
             return this;
         }
 

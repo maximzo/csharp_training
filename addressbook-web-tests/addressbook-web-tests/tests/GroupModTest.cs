@@ -8,10 +8,10 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupModTest : TestBase
+    public class GroupModTests : TestBase
     {
         [Test]
-        public void GroupModificationTest()
+        public void GroupModTest()
         {
             GroupData newData = new GroupData("modified_group");
             newData.Header = "modified_header";

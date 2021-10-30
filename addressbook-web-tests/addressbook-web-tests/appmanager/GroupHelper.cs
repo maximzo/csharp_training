@@ -37,15 +37,15 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper SubmitGroupMod()
-        {
-            driver.FindElement(By.Name("update")).Click();
-            return this;
-        }
-
         public GroupHelper InitGroupMod()
         {
             driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
+        public GroupHelper SubmitGroupMod()
+        {
+            driver.FindElement(By.Name("update")).Click();
             return this;
         }
 
