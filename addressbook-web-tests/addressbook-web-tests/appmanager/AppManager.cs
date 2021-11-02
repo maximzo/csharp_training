@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
@@ -18,8 +19,10 @@ namespace WebAddressbookTests
         protected NavigationHelper navigator;
         protected GroupHelper groupsHelper;
         protected ContactHelper contactHelper;
+        
+        private static ThreadLocal<AppManager> app = new ThreadLocal<AppManager>();
 
-        public AppManager()
+        private AppManager()
         {
             driver = new EdgeDriver();
             baseURL = "http://localhost";
@@ -30,16 +33,8 @@ namespace WebAddressbookTests
             contactHelper = new ContactHelper(this);
         }
 
-        public IWebDriver Driver
-        {
-            get
-            {
-                return driver;
-            }
-        }
-
-        public void Stop()
-        {
+        ~AppManager()
+        {            
             try
             {
                 driver.Quit();
@@ -47,6 +42,23 @@ namespace WebAddressbookTests
             catch (Exception)
             {
                 // Ignore errors if unable to close the browser
+            }
+        }
+
+        public static AppManager GetInstance()
+        {
+            if (! app.IsValueCreated)
+            {
+                app.Value = new AppManager();
+            }
+            return app.Value;
+        }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                return driver;
             }
         }
 
