@@ -23,7 +23,6 @@ namespace WebAddressbookTests
                 .InitNewContactCreation()
                 .FillContactForms(contact)
                 .SubmitContactCreation();
-            app.Auth.Logout();
         }
     }
 }

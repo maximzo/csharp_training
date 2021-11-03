@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
@@ -24,7 +24,7 @@ namespace WebAddressbookTests
 
         private AppManager()
         {
-            driver = new EdgeDriver();
+            driver = new ChromeDriver();
             baseURL = "http://localhost";
 
             loginHelper = new LoginHelper(this);
