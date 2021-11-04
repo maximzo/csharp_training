@@ -19,10 +19,7 @@ namespace WebAddressbookTests
             contact.Title = "Singer, Songwriter";
             contact.Company = "Black Sabbath";
 
-            app.Contact
-                .InitNewContactCreation()
-                .FillContactForms(contact)
-                .SubmitContactCreation();
+            app.Contact.Create(contact);
         }
     }
 }

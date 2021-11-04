@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
@@ -29,11 +29,43 @@ namespace WebAddressbookTests
         public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
-            SelectGroup(v);
-            InitGroupMod();
-            FillGroupForms(newData);
-            SubmitGroupMod();
-            ReturnToGroupPage();
+            if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + v + "]/input")))
+            {
+                SelectGroup(v);
+                InitGroupMod();
+                FillGroupForms(newData);
+                SubmitGroupMod();
+                ReturnToGroupPage();
+            }
+            else
+            {
+                Create(newData);
+                SelectGroup(v);
+                InitGroupMod();
+                FillGroupForms(newData);
+                SubmitGroupMod();
+                ReturnToGroupPage();
+            }
+
+            return this;
+        }
+
+        public GroupHelper Remove(int v, GroupData group)
+        {
+            manager.Navigator.GoToGroupPage();
+            if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + v + "]/input")))
+            {
+                SelectGroup(v);
+                RemoveGroup();
+                ReturnToGroupPage();
+            }
+            else
+            {
+                Create(group);
+                SelectGroup(v);
+                RemoveGroup();
+                ReturnToGroupPage();
+            }
             return this;
         }
 
@@ -46,15 +78,6 @@ namespace WebAddressbookTests
         public GroupHelper SubmitGroupMod()
         {
             driver.FindElement(By.Name("update")).Click();
-            return this;
-        }
-
-        public GroupHelper Remove(int v)
-        {
-            manager.Navigator.GoToGroupPage();
-            SelectGroup(v);
-            RemoveGroup();
-            ReturnToGroupPage();
             return this;
         }
 

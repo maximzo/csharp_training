@@ -16,11 +16,54 @@ namespace WebAddressbookTests
         {
         }
 
-        public ContactHelper Remove(int v)
+        public ContactHelper Create(ContactData contact)
         {
             manager.Navigator.OpenHomePage();
-            SelectContact(v);
-            RemoveContact();
+            InitNewContactCreation();
+            FillContactForms(contact);
+            SubmitContactCreation();
+            return this;
+        }
+
+        public ContactHelper Modify(int v, ContactData contact, ContactData contactEdit)
+        {
+            manager.Navigator.OpenHomePage();
+            if (IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + v + "]/td/input")))
+            {
+                InitContactMod(v);
+                FillContactForms(contactEdit);
+                SubmitContactMod();
+            }
+            else
+            {
+                InitNewContactCreation();
+                FillContactForms(contact);
+                SubmitContactCreation();
+                manager.Navigator.OpenHomePage();
+                InitContactMod(v);
+                FillContactForms(contactEdit);
+                SubmitContactMod();
+            }
+            return this;
+        }
+
+        public ContactHelper Remove(int v, ContactData contact)
+        {
+            manager.Navigator.OpenHomePage();
+            if (IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + v + "]/td/input")))
+            {
+                SelectContact(v);
+                RemoveContact();
+            }
+            else
+            {
+                InitNewContactCreation();
+                FillContactForms(contact);
+                SubmitContactCreation();
+                manager.Navigator.OpenHomePage();
+                SelectContact(v);
+                RemoveContact();
+            }
             return this;
         }
 
@@ -30,14 +73,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData contactEdit)
-        {
-            manager.Navigator.OpenHomePage();
-            InitContactMod(v);
-            FillContactForms(contactEdit);
-            SubmitContactMod();
-            return this;
-        }
         public ContactHelper InitContactMod(int editindex)
         {
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + editindex + "]/td[8]/a/img")).Click();
