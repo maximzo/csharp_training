@@ -26,7 +26,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Modify(int v, GroupData newData)
+        public GroupHelper Modify(int v, GroupData group, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
             if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + v + "]/input")))
@@ -39,7 +39,7 @@ namespace WebAddressbookTests
             }
             else
             {
-                Create(newData);
+                Create(group);
                 SelectGroup(v);
                 InitGroupMod();
                 FillGroupForms(newData);
