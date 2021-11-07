@@ -26,46 +26,23 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Modify(int v, GroupData group, GroupData newData)
+        public GroupHelper Modify(int v, GroupData newData)
         {
             manager.Navigator.GoToGroupPage();
-            if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + v + "]/input")))
-            {
-                SelectGroup(v);
-                InitGroupMod();
-                FillGroupForms(newData);
-                SubmitGroupMod();
-                ReturnToGroupPage();
-            }
-            else
-            {
-                Create(group);
-                SelectGroup(v);
-                InitGroupMod();
-                FillGroupForms(newData);
-                SubmitGroupMod();
-                ReturnToGroupPage();
-            }
-
+            SelectGroup(v);
+            InitGroupMod();
+            FillGroupForms(newData);
+            SubmitGroupMod();
+            ReturnToGroupPage();
             return this;
         }
 
-        public GroupHelper Remove(int v, GroupData group)
+        public GroupHelper Remove(int v)
         {
             manager.Navigator.GoToGroupPage();
-            if (IsElementPresent(By.XPath("//div[@id='content']/form/span[" + v + "]/input")))
-            {
-                SelectGroup(v);
-                RemoveGroup();
-                ReturnToGroupPage();
-            }
-            else
-            {
-                Create(group);
-                SelectGroup(v);
-                RemoveGroup();
-                ReturnToGroupPage();
-            }
+            SelectGroup(v);
+            InitGroupRemove();
+            ReturnToGroupPage();
             return this;
         }
 
@@ -107,7 +84,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper RemoveGroup()
+        public GroupHelper InitGroupRemove()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[5]")).Click();
             return this;
@@ -117,6 +94,11 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("group page")).Click();
             return this;
+        }
+
+        public bool IsGroupExist()
+        {
+            return IsElementPresent(By.XPath("//div[@id='content']/form/span[1]/input"));
         }
     }
 }

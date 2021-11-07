@@ -25,45 +25,20 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData contact, ContactData contactEdit)
+        public ContactHelper Modify(int v, ContactData contactEdit)
         {
             manager.Navigator.OpenHomePage();
-            if (IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + v + "]/td/input")))
-            {
-                InitContactMod(v);
-                FillContactForms(contactEdit);
-                SubmitContactMod();
-            }
-            else
-            {
-                InitNewContactCreation();
-                FillContactForms(contact);
-                SubmitContactCreation();
-                manager.Navigator.OpenHomePage();
-                InitContactMod(v);
-                FillContactForms(contactEdit);
-                SubmitContactMod();
-            }
+            InitContactMod(v);
+            FillContactForms(contactEdit);
+            SubmitContactMod();
             return this;
         }
 
-        public ContactHelper Remove(int v, ContactData contact)
+        public ContactHelper Remove(int v)
         {
             manager.Navigator.OpenHomePage();
-            if (IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + v + "]/td/input")))
-            {
-                SelectContact(v);
-                RemoveContact();
-            }
-            else
-            {
-                InitNewContactCreation();
-                FillContactForms(contact);
-                SubmitContactCreation();
-                manager.Navigator.OpenHomePage();
-                SelectContact(v);
-                RemoveContact();
-            }
+            SelectContact(v);
+            RemoveContact();
             return this;
         }
 
@@ -112,6 +87,11 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
+        }
+
+        public bool IsContactExist()
+        {
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[2]/td/input"));
         }
     }
 }

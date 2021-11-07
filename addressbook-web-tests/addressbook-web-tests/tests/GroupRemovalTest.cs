@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase 
+    public class GroupRemovalTests : AuthTestBase
     {
         [Test]
         public void GroupRemovalTest()
@@ -19,7 +17,16 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
-            app.Groups.Remove(1, group);
+            app.Navigator.GoToGroupPage();
+            if (app.Groups.IsGroupExist())
+            {
+                app.Groups.Remove(1);
+            }
+            else
+            {
+                app.Groups.Create(group);
+                app.Groups.Remove(1);
+            }
         }
     }
 }

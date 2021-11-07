@@ -17,7 +17,16 @@ namespace WebAddressbookTests
             ContactData contactEdit = new ContactData("Jonathan");
             contactEdit.Lastname = "Osbournitze";
 
-            app.Contact.Modify(2, contact, contactEdit);
+            app.Navigator.OpenHomePage();
+            if (app.Contact.IsContactExist())
+            {
+                app.Contact.Modify(2, contactEdit);
+            }
+            else
+            {
+                app.Contact.Create(contact);
+                app.Contact.Modify(2, contactEdit);
+            }
         }
     }
 }
