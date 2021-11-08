@@ -18,15 +18,23 @@ namespace WebAddressbookTests
             group.Footer = "";
 
             app.Navigator.GoToGroupPage();
+
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
             if (app.Groups.IsGroupExist())
             {
-                app.Groups.Remove(1);
+                app.Groups.Remove(0);
             }
             else
             {
                 app.Groups.Create(group);
-                app.Groups.Remove(1);
+                app.Groups.Remove(0);
             }
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+
+            oldGroups.RemoveAt(0);
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
