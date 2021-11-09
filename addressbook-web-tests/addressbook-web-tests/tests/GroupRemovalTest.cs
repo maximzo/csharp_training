@@ -35,8 +35,14 @@ namespace WebAddressbookTests
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
 
+            GroupData toBeRemoved = oldGroups[0];
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData gro in newGroups)
+            {
+                Assert.AreNotEqual(gro.Id, toBeRemoved.Id);
+            }
         }
     }
 }
