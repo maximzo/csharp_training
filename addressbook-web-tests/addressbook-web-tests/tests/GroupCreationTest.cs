@@ -58,10 +58,7 @@ namespace WebAddressbookTests
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupList();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();
-            Assert.AreEqual(oldGroups, newGroups);
+            Assert.AreEqual(oldGroups.Count, newGroups.Count);
         }
     }
 }

@@ -96,9 +96,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool IsGroupExist()
+        public bool IsGroupExist(int p)
         {
-            return IsElementPresent(By.XPath("//div[@id='content']/form/span[1]/input"));
+            return IsElementPresent(By.XPath("//div[@id='content']/form/span[" + (p+1) + "]/input"));
         }
 
         public List<GroupData> GetGroupList()

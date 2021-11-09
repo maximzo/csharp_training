@@ -21,7 +21,7 @@ namespace WebAddressbookTests
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            if (app.Groups.IsGroupExist())
+            if (app.Groups.IsGroupExist(0))
             {
                 app.Groups.Remove(0);
             }

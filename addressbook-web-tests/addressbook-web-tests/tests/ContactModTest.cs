@@ -18,15 +18,25 @@ namespace WebAddressbookTests
             contactEdit.Lastname = "Osbournitze";
 
             app.Navigator.OpenHomePage();
-            if (app.Contact.IsContactExist())
+
+            List<ContactData> oldContacts = app.Contact.GetContactList();
+
+            if (app.Contact.IsContactExist(0))
             {
-                app.Contact.Modify(2, contactEdit);
+                app.Contact.Modify(0, contactEdit);
             }
             else
             {
                 app.Contact.Create(contact);
-                app.Contact.Modify(2, contactEdit);
+                app.Contact.Modify(0, contactEdit);
             }
+
+            List<ContactData> newContacts = app.Contact.GetContactList();
+            oldContacts[0].Firstname = contactEdit.Firstname;
+            oldContacts[0].Lastname = contactEdit.Lastname;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

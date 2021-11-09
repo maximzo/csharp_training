@@ -44,13 +44,13 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + index + "]/td/input")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+2) + "]/td/input")).Click();
             return this;
         }
 
         public ContactHelper InitContactMod(int editindex)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + editindex + "]/td[8]/a/img")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (editindex+2) + "]/td[8]/a/img")).Click();
             return this;
         }
         public ContactHelper SubmitContactMod()
@@ -89,9 +89,25 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool IsContactExist()
+        public bool IsContactExist(int p)
         {
-            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[2]/td/input"));
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (p+2) + "]/td/input"));
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.OpenHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr"));
+            foreach (IWebElement element in elements)
+            {
+                if (element.GetAttribute("name") == "entry")
+                {
+                    List<IWebElement> tds = element.FindElements(By.CssSelector("td")).ToList();
+                    contacts.Add(new ContactData(tds[2].Text, tds[1].Text));
+                }
+            }
+            return contacts;
         }
     }
 }
