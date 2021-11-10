@@ -21,15 +21,11 @@ namespace WebAddressbookTests
 
             List<ContactData> oldContacts = app.Contact.GetContactList();
 
-            if (app.Contact.IsContactExist(0))
-            {
-                app.Contact.Modify(0, contactEdit);
-            }
-            else
+            if (!app.Contact.IsContactExist(0))
             {
                 app.Contact.Create(contact);
-                app.Contact.Modify(0, contactEdit);
             }
+            app.Contact.Modify(0, contactEdit);
 
             List<ContactData> newContacts = app.Contact.GetContactList();
             oldContacts[0].Firstname = contactEdit.Firstname;

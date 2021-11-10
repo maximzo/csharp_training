@@ -21,15 +21,11 @@ namespace WebAddressbookTests
 
             List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-            if (app.Groups.IsGroupExist(0))
-            {
-                app.Groups.Remove(0);
-            }
-            else
+            if (!app.Groups.IsGroupExist(0))
             {
                 app.Groups.Create(group);
-                app.Groups.Remove(0);
             }
+            app.Groups.Remove(0);
 
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 

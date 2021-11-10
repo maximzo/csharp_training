@@ -23,15 +23,11 @@ namespace WebAddressbookTests
             List<GroupData> oldGroups = app.Groups.GetGroupList();
             GroupData oldData = oldGroups[0];
 
-            if (app.Groups.IsGroupExist(0))
-            {
-                app.Groups.Modify(0, newData);
-            }
-            else
+            if (!app.Groups.IsGroupExist(0))
             {
                 app.Groups.Create(group);
-                app.Groups.Modify(0, newData);
             }
+            app.Groups.Modify(0, newData);
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
