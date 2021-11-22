@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -117,23 +118,57 @@ namespace WebAddressbookTests
                 }
                 else
                 {
+                    string birthday = string.Empty;
+                    if (Birthday != "0")
+                    {
+                        birthday = Birthday + ".";
+                    }
+                    
+                    string birtmonth = string.Empty;
+                    if (Birthmonth != "-")
+                    {
+                        birtmonth = " " + Birthmonth;
+                    }
+
+                    string birthyear = string.Empty;
+                    if (Birthyear != "")
+                    {
+                        birthyear = " " + Birthyear;
+                    }
+
                     string age = string.Empty;
-                    if (Birthday != null)
+                    if (Birthyear != "")
                     {
                         age = " (" + (2021 - Convert.ToInt32(Birthyear)) + ")".ToString();
                     }
 
+                    string anniversaryday = string.Empty;
+                    if (Anniversaryday != "0")
+                    {
+                        anniversaryday = Anniversaryday + ".";
+                    }
+
+                    string anniversarymonth = string.Empty;
+                    if (Anniversarymonth != "-")
+                    {
+                        anniversarymonth = " " + Anniversarymonth;
+                    }
+
+                    string anniversaryyear = string.Empty;
+                    if (Anniversaryyear != "")
+                    {
+                        anniversaryyear = " " + Anniversaryyear;
+                    }
+
                     string annyage = string.Empty;
-                    if (Birthday != null)
+                    if (Anniversaryyear != "")
                     {
                         annyage = " (" + (2021 - Convert.ToInt32(Anniversaryyear)) + ")".ToString();
                     }
 
-                    return (Firstname + " " + Middlename + " " + Lastname + "\r\n" + Nickname + "\r\n" + Title + "\r\n" + Company + "\r\n" +
-                        Address + "\r\n" + HomePhone + "\r\n" + MobilePhone + "\r\n" + WorkPhone + "\r\n" + Fax + "\r\n" + Email + "\r\n" + Email2 + "\r\n" + Email3 + "\r\n" +
-                        Homepage + "\r\n" + Birthday + ". " + Birthmonth + " " + Birthyear + age + "\r\n" +
-                        Anniversaryday + ". " + Anniversarymonth + " " + Anniversaryyear + annyage + "\r\n" + 
-                        Address2 + "\r\n" + HomePhone2 + "\r\n" + Notes).Trim();
+                    return (Addrn(FullName) + Addrn(Nickname) + Addrn(Title) + Addrn(Company) + Addrn(Address) + Addrn(HomePhone) + Addrn(MobilePhone) + 
+                        Addrn(WorkPhone) + Addrn(Fax) + Addrn(Email) + Addrn(Email2) + Addrn(Email3) + Addrn(Homepage) + Addrn(birthday + birtmonth + birthyear + age) + 
+                        Addrn(anniversaryday + anniversarymonth + anniversaryyear + annyage) + Addrn(Address2) + Addrn(HomePhone2) + Addrn(Notes)).Trim();
                 }
             }
             set { allContactInfo = value; }
@@ -183,7 +218,16 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+        }
+
+        private string Addrn(string anytext)
+        {
+            if (anytext == null || anytext == "")
+            {
+                return "";
+            }
+            return anytext + "\r\n";
         }
     }
 }
