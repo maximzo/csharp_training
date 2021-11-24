@@ -10,16 +10,23 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact = new ContactData("John");
-            contact.Middlename = "Michael";
-            contact.Lastname = "Osbourne";
-            contact.Nickname = "Ozzy";
-            contact.Title = "Singer, Songwriter";
-            contact.Company = "Black Sabbath";
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(30))
+                {
+                    Firstname = GenerateRandomString(25),
+                    Lastname = GenerateRandomString(25)
+                });
+            }
+            return contacts;
+        }
 
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {
             List<ContactData> oldContacts = app.Contact.GetContactList();
 
             app.Contact.Create(contact);
@@ -30,6 +37,27 @@ namespace WebAddressbookTests
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
         }
+
+        //[Test]
+        //public void ContactCreationTest()
+        //{
+        //    ContactData contact = new ContactData("John");
+        //    contact.Middlename = "Michael";
+        //    contact.Lastname = "Osbourne";
+        //    contact.Nickname = "Ozzy";
+        //    contact.Title = "Singer, Songwriter";
+        //    contact.Company = "Black Sabbath";
+
+        //    List<ContactData> oldContacts = app.Contact.GetContactList();
+
+        //    app.Contact.Create(contact);
+
+        //    List<ContactData> newContacts = app.Contact.GetContactList();
+        //    oldContacts.Add(contact);
+        //    oldContacts.Sort();
+        //    newContacts.Sort();
+        //    Assert.AreEqual(oldContacts, newContacts);
+        //}
 
         [Test]
         public void ContactFullInfoCreationTest()
