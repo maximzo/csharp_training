@@ -11,6 +11,7 @@ namespace WebAddressbookTests
     {
         private string allContactInfo;
         private string fullName;
+        private string allEmail;
         private string allPhones;
 
         public ContactData()
@@ -197,6 +198,25 @@ namespace WebAddressbookTests
             }
         }
 
+        public string AllEmail
+        {
+            get
+            {
+                if (allEmail != null)
+                {
+                    return allEmail;
+                }
+                else
+                {
+                    return (Addrn(Email) + Addrn(Email2) + Addrn(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allEmail = value;
+            }
+        }
+
         public string AllPhones
         {
             get
@@ -222,7 +242,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[- ()]", "") + "\r\n";
         }
 
         private string Addrn(string anytext)
