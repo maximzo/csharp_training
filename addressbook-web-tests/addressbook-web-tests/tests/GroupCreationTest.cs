@@ -109,5 +109,19 @@ namespace WebAddressbookTests
             List<GroupData> newGroups = app.Groups.GetGroupList();
             Assert.AreEqual(oldGroups, newGroups);
         }
+
+        [Test]
+        public void TestDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUi = app.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<GroupData> fromDb = GroupData.GetAll();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+        }
     }
 }
