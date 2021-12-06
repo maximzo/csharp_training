@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allContactInfo;
@@ -65,10 +67,15 @@ namespace WebAddressbookTests
             return Lastname.CompareTo(other.Lastname);
         }
 
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
+
+        [Column(Name = "firstname")]
         public string Firstname { get; set; }
 
         public string Middlename { get; set; }
 
+        [Column(Name = "lastname")]
         public string Lastname { get; set; }
 
         public string Nickname { get; set; }
