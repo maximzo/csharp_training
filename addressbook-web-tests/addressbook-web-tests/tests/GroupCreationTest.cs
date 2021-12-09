@@ -113,11 +113,9 @@ namespace WebAddressbookTests
         [Test]
         public void TestDBConnectivity()
         {
-            var z = GroupData.GetAll()[0].GetContacts();
-
-            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+           foreach (ContactData contact in ContactData.GetAll())
             {
-                System.Console.Out.WriteLine(contact);
+                System.Console.Out.WriteLine(contact.Deprecated);
             }
 
             //DateTime start = DateTime.Now;

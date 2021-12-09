@@ -120,6 +120,9 @@ namespace WebAddressbookTests
 
         public string Notes { get; set; }
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
+
         public string AllContactInfo
         {
             get
@@ -259,6 +262,14 @@ namespace WebAddressbookTests
                 return "";
             }
             return anytext + "\r\n";
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "00.00.0000 0:00:00") select c).ToList();
+            }
         }
     }
 }
