@@ -13,9 +13,9 @@ namespace WebAddressbookTests
         [Test]
         public void GroupRemovalTest()
         {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
+            GroupData testGroup = new GroupData("");
+            testGroup.Header = "";
+            testGroup.Footer = "";
 
             app.Navigator.GoToGroupPage();
 
@@ -24,21 +24,21 @@ namespace WebAddressbookTests
 
             if (!app.Groups.IsGroupExist(0))
             {
-                app.Groups.Create(group);
+                app.Groups.Create(testGroup);
             }
+
             app.Groups.Remove(toBeRemoved);
 
             Assert.AreEqual(oldGroups.Count - 1, app.Groups.GetGroupCount());
 
             List<GroupData> newGroups = GroupData.GetAll();
 
-            //GroupData toBeRemoved = oldGroups[0];
             oldGroups.RemoveAt(0);
             Assert.AreEqual(oldGroups, newGroups);
 
-            foreach (GroupData gro in newGroups)
+            foreach (GroupData g in newGroups)
             {
-                Assert.AreNotEqual(gro.Id, toBeRemoved.Id);
+                Assert.AreNotEqual(g.Id, toBeRemoved.Id);
             }
         }
     }

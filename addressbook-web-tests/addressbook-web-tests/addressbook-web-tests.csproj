@@ -132,6 +132,7 @@
     <Compile Include="tests\ContactInformationTest.cs" />
     <Compile Include="tests\ContactModTest.cs" />
     <Compile Include="tests\ContactRemovalTest.cs" />
+    <Compile Include="tests\ContactTestBase.cs" />
     <Compile Include="tests\GroupModTest.cs" />
     <Compile Include="tests\GroupRemovalTest.cs" />
     <Compile Include="appmanager\GroupHelper.cs" />

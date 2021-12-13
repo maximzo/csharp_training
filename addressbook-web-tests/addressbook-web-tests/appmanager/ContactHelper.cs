@@ -31,6 +31,17 @@ namespace WebAddressbookTests
             InitContactMod(v);
             FillContactForms(contactEdit);
             SubmitContactMod();
+            manager.Navigator.OpenHomePage();
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData contact, ContactData contactEdit)
+        {
+            manager.Navigator.OpenHomePage();
+            InitContactMod(contact.Id);
+            FillContactForms(contactEdit);
+            SubmitContactMod();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
@@ -39,6 +50,16 @@ namespace WebAddressbookTests
             manager.Navigator.OpenHomePage();
             SelectContact(v);
             RemoveContact();
+            manager.Navigator.OpenHomePage();
+            return this;
+        }
+
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
@@ -48,11 +69,24 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper SelectContact(String id)
+        {
+            driver.FindElement(By.Id(id)).Click();
+            return this;
+        }
+
         public ContactHelper InitContactMod(int editindex)
         {
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (editindex+2) + "]/td[8]/a/img")).Click();
             return this;
         }
+
+        public ContactHelper InitContactMod(string id)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + id + "']")).Click();
+            return this;
+        }
+
         public ContactHelper SubmitContactMod()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -104,6 +138,11 @@ namespace WebAddressbookTests
             return this;
         }
 
+        internal int GetContactCount()
+        {
+            return driver.FindElements(By.Name("selected[]")).Count;
+        }
+
         public ContactHelper InitNewContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
@@ -112,6 +151,7 @@ namespace WebAddressbookTests
 
         public bool IsContactExist(int p)
         {
+            manager.Navigator.OpenHomePage();
             return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (p+2) + "]/td/input"));
         }
 

@@ -78,7 +78,7 @@ namespace WebAddressbookTests
         }
 
         [Test, TestCaseSource("GroupDataFromXmlFile")]
-        public void GroupCreationTest(GroupData group)
+        public void GroupFromFileCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = GroupData.GetAll();
 
@@ -100,13 +100,13 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             Assert.AreEqual(oldGroups, newGroups);
         }
 
