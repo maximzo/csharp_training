@@ -57,7 +57,7 @@ namespace WebAddressbookTests
         public ContactHelper Remove(ContactData contact)
         {
             manager.Navigator.OpenHomePage();
-            SelectContact(contact.Id);
+            SelectContactById(contact.Id);
             RemoveContact();
             manager.Navigator.OpenHomePage();
             return this;
@@ -66,12 +66,6 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact(int index)
         {
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (index+2) + "]/td/input")).Click();
-            return this;
-        }
-
-        public ContactHelper SelectContact(String id)
-        {
-            driver.FindElement(By.Id(id)).Click();
             return this;
         }
 
@@ -282,7 +276,7 @@ namespace WebAddressbookTests
             };
         }
 
-        public void AddAddContactToGroup(ContactData contact, GroupData group)
+        public void AddContactToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.OpenHomePage();
             ClearGroupFilter();
@@ -292,14 +286,14 @@ namespace WebAddressbookTests
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
         private void SelectContactById(string contactid)
         {
             driver.FindElement(By.Id(contactid)).Click();
-        }
-
-        private void CommitAddingContactToGroup()
-        {
-            driver.FindElement(By.Name("add")).Click();
         }
 
         private void SelectGroupToAdd(string name)
@@ -307,9 +301,27 @@ namespace WebAddressbookTests
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
         }
 
-        private void ClearGroupFilter()
+        private void CommitAddingContactToGroup()
         {
-            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        internal void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectGroupWithContacts(group.Name);
+            SelectContactById(contact.Id);
+            CommitRemoveContactFromGroup();
+        }
+
+        private void SelectGroupWithContacts(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
+        private void CommitRemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
         }
     }
 }

@@ -77,7 +77,7 @@ namespace WebAddressbookTests
             return groups;
         }
 
-        [Test, TestCaseSource("GroupDataFromXmlFile")]
+        [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupFromFileCreationTest(GroupData group)
         {
             List<GroupData> oldGroups = GroupData.GetAll();
@@ -113,10 +113,15 @@ namespace WebAddressbookTests
         [Test]
         public void TestDBConnectivity()
         {
-           foreach (ContactData contact in ContactData.GetAll())
+            foreach (ContactData contact in ContactData.GetAll())
             {
                 System.Console.Out.WriteLine(contact.Deprecated);
             }
+
+            //foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            //{
+            //    System.Console.Out.WriteLine(contact);
+            //}
 
             //DateTime start = DateTime.Now;
             //List<GroupData> fromUi = app.Groups.GetGroupList();
