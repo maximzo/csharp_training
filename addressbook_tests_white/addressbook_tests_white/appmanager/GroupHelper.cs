@@ -17,6 +17,7 @@ namespace addressbook_tests_white
     public class GroupHelper : HelperBase
     {
         public static string GROUPWINTITLE = "Group editor";
+        public static string DELGROUPWINTITLE = "Delete group";
         public GroupHelper(ApplicationManager manager) : base(manager) { }
 
         public List<GroupData> GetGroupList()
@@ -43,6 +44,19 @@ namespace addressbook_tests_white
             TextBox textBox = (TextBox) dialogue.Get(SearchCriteria.ByControlType(ControlType.Edit));
             textBox.Enter(newGroup.Name);
             Keyboard.Instance.PressSpecialKey(KeyboardInput.SpecialKeys.RETURN);
+            CloseGroupsDialogue(dialogue);
+        }
+
+        internal void Remove(int index)
+        {
+            Window dialogue = OpenGroupsDialogue();
+            Tree tree = dialogue.Get<Tree>("uxAddressTreeView");
+            TreeNode root = tree.Nodes[0];
+            root.GetElement(SearchCriteria.ByControlType(ControlType.TreeItem).AndIndex(index)).SetFocus();
+            dialogue.Get<Button>("uxDeleteAddressButton").Click();
+            Window deldialogue = dialogue.ModalWindow(DELGROUPWINTITLE);
+            deldialogue.Get<RadioButton>("uxDeleteAllRadioButton").Click();
+            deldialogue.Get<Button>("uxOKAddressButton").Click();
             CloseGroupsDialogue(dialogue);
         }
 
