@@ -133,57 +133,11 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    string birthday = string.Empty;
-                    if (Birthday != "0")
-                    {
-                        birthday = Birthday + ".";
-                    }
-                    
-                    string birtmonth = string.Empty;
-                    if (Birthmonth != "-")
-                    {
-                        birtmonth = " " + Birthmonth;
-                    }
-
-                    string birthyear = string.Empty;
-                    if (Birthyear != "")
-                    {
-                        birthyear = " " + Birthyear;
-                    }
-
-                    string age = string.Empty;
-                    if (Birthyear != "")
-                    {
-                        age = " (" + (2021 - Convert.ToInt32(Birthyear)) + ")".ToString();
-                    }
-
-                    string anniversaryday = string.Empty;
-                    if (Anniversaryday != "0")
-                    {
-                        anniversaryday = Anniversaryday + ".";
-                    }
-
-                    string anniversarymonth = string.Empty;
-                    if (Anniversarymonth != "-")
-                    {
-                        anniversarymonth = " " + Anniversarymonth;
-                    }
-
-                    string anniversaryyear = string.Empty;
-                    if (Anniversaryyear != "")
-                    {
-                        anniversaryyear = " " + Anniversaryyear;
-                    }
-
-                    string annyage = string.Empty;
-                    if (Anniversaryyear != "")
-                    {
-                        annyage = " (" + (2021 - Convert.ToInt32(Anniversaryyear)) + ")".ToString();
-                    }
-
-                    return (Addrn(FullName) + Addrn(Nickname) + Addrn(Title) + Addrn(Company) + Addrn(Address) + Addrn(HomePhone) + Addrn(MobilePhone) + 
-                        Addrn(WorkPhone) + Addrn(Fax) + Addrn(Email) + Addrn(Email2) + Addrn(Email3) + Addrn(Homepage) + Addrn(birthday + birtmonth + birthyear + age) + 
-                        Addrn(anniversaryday + anniversarymonth + anniversaryyear + annyage) + Addrn(Address2) + Addrn(HomePhone2) + Addrn(Notes)).Trim();
+                    return Addrn(FullName) + CleanUp(Nickname) + Addrn(CleanUp(Title) + CleanUp(Company) + CleanUp(Address)) + 
+                        Addrn(ForPhones(HomePhone)) + Addrn(ForPhones(MobilePhone)) + Addrn(ForPhones(WorkPhone)) + Addrn(ForPhones(Fax)) +
+                        Addrn(CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)) + CleanUp(Homepage) + 
+                        Addrn(ForDays(Birthday) + Spaces(Birthmonth) + ForYears(Birthyear) + ForDays(Anniversaryday) + Spaces(Anniversarymonth) + ForYears(Anniversaryyear)) + 
+                        Addrn(CleanUp(Address2)) + Addrn(ForPhones(HomePhone2)) + CleanUp(Notes);
                 }
             }
             set { allContactInfo = value; }
@@ -237,7 +191,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone) + CleanUp(HomePhone2)).Trim();
+                    return (PhonesCleanUp(HomePhone) + PhonesCleanUp(MobilePhone) + PhonesCleanUp(WorkPhone) + PhonesCleanUp(HomePhone2)).Trim();
                 }
             }
             set
@@ -246,13 +200,90 @@ namespace WebAddressbookTests
             }
         }
 
-        private string CleanUp(string phone)
+        private string Spaces(string data)
+        {
+            if (data == null || data == "")
+            {
+                return "";
+            }
+            return data + " ";
+        }
+
+        private string CleanUp(string data)
+        {
+            if (data == null || data == "")
+            {
+                return "";
+            }
+            if (data == Homepage)
+            {
+                return "Homepage:" + "\r\n" + data + "\r\n\r\n";
+            }
+            if (data == Notes)
+            {
+                return (data + "\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+            }
+            return data + "\r\n";
+        }
+
+        private string PhonesCleanUp(string phone)
         {
             if (phone == null || phone == "")
             {
                 return "";
             }
             return Regex.Replace(phone, "[- ()]", "") + "\r\n";
+        }
+
+        private string ForPhones(string phone)
+        {
+            if (phone == HomePhone)
+            {
+                return "H: " + phone;
+            }
+            else if (phone == MobilePhone)
+            {
+                return "M: " + phone;
+            }
+            else if (phone == WorkPhone)
+            {
+                return "W: " + phone;
+            }
+            else if (phone == Fax)
+            {
+                return "F: " + phone + "\r\n";
+            }
+            else if (phone == HomePhone2)
+            {
+                return "P: " + phone + "\r\n";
+            }
+            return "";
+        }
+
+        private string ForDays(string day)
+        {
+            if (day == null || day == "")
+            {
+                return "";
+            }
+            if (day == Birthday)
+            {
+                return "Birthday " + day + ". ";
+            }
+            if (day == Anniversaryday)
+            {
+                return "Anniversary " + day + ". ";
+            }
+            return "";
+        }
+
+        private string ForYears(string year)
+        {
+            if (year == null || year == "")
+            {
+                return "";
+            }
+            return year + " (" + (2021 - Convert.ToInt32(year)) + ")" + "\r\n";
         }
 
         private string Addrn(string anytext)

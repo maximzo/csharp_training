@@ -295,9 +295,7 @@ namespace WebAddressbookTests
             manager.Navigator.OpenHomePage();
             OpenContactDetails(index);
 
-            string allContactInfo = driver.FindElement(By.Id("content")).GetAttribute("innerText").Replace("\r\n\r\n", "\r\n").
-                Replace("H: ", "").Replace("M: ", "").Replace("W: ", "").Replace("F: ", "").Replace("Birthday ", "").Replace("Anniversary ", "").
-                Replace("Homepage:\r\n", "").Replace("P: ", "").Trim();
+            string allContactInfo = driver.FindElement(By.Id("content")).GetAttribute("innerText");
             
             string fullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;
 
