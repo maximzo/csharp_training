@@ -7,35 +7,33 @@ using LinqToDB.Mapping;
 
 namespace mantis_tests
 {
-    [Table(Name = "mantis_user_table")]
-    public class AccountData : IEquatable<AccountData>, IComparable<AccountData>
+    [Table(Name = "mantis_project_table")]
+    public class ProjectData : IEquatable<ProjectData>, IComparable<ProjectData>
     {
-        public AccountData()
+        public ProjectData()
         {
         }
 
-        public AccountData(string username, string password)
+        public ProjectData(string name)
         {
-            Name = username;
-            Password = password;
+            Name = name;
         }
 
-        [Column(Name = "username")]
+        [Column(Name = "name")]
         public string Name { get; set; }
-        [Column(Name = "password")]
-        public string Password { get; set; }
-        [Column(Name = "email")]
-        public string Email { get; set; }
 
-        internal static List<AccountData> GetAll()
+        [Column(Name = "id")]
+        public string Id { get; set; }
+
+        public static List<ProjectData> GetAll()
         {
             using (MantisDB db = new MantisDB())
             {
-                return (from a in db.Accounts select a).ToList();
+                return (from p in db.Projects select p).ToList();
             }
         }
 
-        public bool Equals(AccountData other)
+        public bool Equals(ProjectData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
@@ -55,7 +53,7 @@ namespace mantis_tests
             return Name.GetHashCode();
         }
 
-        public int CompareTo(AccountData other)
+        public int CompareTo(ProjectData other)
         {
             if (Object.ReferenceEquals(other, null))
             {

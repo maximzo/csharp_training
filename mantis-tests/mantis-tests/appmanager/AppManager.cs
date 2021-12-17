@@ -19,17 +19,24 @@ namespace mantis_tests
         public FtpHelper Ftp { get; set; }
         public JamesHelper James { get; set; }
         public MailHelper Mail { get; set; }
+        public LoginHelper Login { get; set; }
+        public NavigationHelper Navigator { get; set; }
+        public ProjectHelper Project { get; set; }
 
         private static ThreadLocal<AppManager> app = new ThreadLocal<AppManager>();
 
         private AppManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost";
+            baseURL = "http://localhost/mantisbt";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
+            Login = new LoginHelper(this);
+            Navigator = new NavigationHelper(this, baseURL);
+            Project = new ProjectHelper(this);
+
         }
 
         ~AppManager()
@@ -60,6 +67,13 @@ namespace mantis_tests
             get
             {
                 return driver;
+            }
+        }
+        public LoginHelper Auth
+        {
+            get
+            {
+                return Login;
             }
         }
     }

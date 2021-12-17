@@ -24,15 +24,27 @@ namespace mantis_tests
         {
             AccountData account = new AccountData()
             {
-                Name = "testuser5",
+                Name = "testuser6",
                 Password = "password",
-                Email = "testuser5@localhost.localdomain"
+                Email = "testuser6@localhost.localdomain"
             };
+
+            List<AccountData> oldAccounts = AccountData.GetAll();
 
             app.James.Delete(account);
             app.James.Add(account);
 
             app.Registration.Register(account);
+
+            List<AccountData> newAccounts = AccountData.GetAll();
+            oldAccounts.Add(account);
+            oldAccounts.Sort();
+            newAccounts.Sort();
+            Assert.AreEqual(oldAccounts, newAccounts);
+
+            app.Auth.Logout();
+            app.Auth.Login(account);
+            Assert.IsTrue(app.Auth.IsLoggedIn(account));
         }
 
         [OneTimeTearDown]
