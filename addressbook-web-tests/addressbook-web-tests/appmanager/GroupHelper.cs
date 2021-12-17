@@ -125,9 +125,23 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool IsGroupExist(int p)
+        //public bool IsGroupExist(int p)
+        //{
+        //    return IsElementPresent(By.XPath("//div[@id='content']/form/span[" + (p+1) + "]/input"));
+        //}
+
+        public GroupHelper IsGroupExist(int p)
         {
-            return IsElementPresent(By.XPath("//div[@id='content']/form/span[" + (p+1) + "]/input"));
+            manager.Navigator.GoToGroupPage();
+
+            if (!IsElementPresent(By.XPath("//div[@id='content']/form/span[" + (p + 1) + "]/input")))
+            {
+                GroupData testGroup = new GroupData("test");
+                testGroup.Header = "test";
+                testGroup.Footer = "test";
+                Create(testGroup);
+            }
+            return this;
         }
 
         private List<GroupData> groupCache = null;

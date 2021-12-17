@@ -17,10 +17,7 @@ namespace WebAddressbookTests
             ContactData contactEdit = new ContactData("Jonathan");
             contactEdit.Lastname = "Osbournitze";
 
-            if (!app.Contact.IsContactExist(0))
-            {
-                app.Contact.Create(testContact);
-            }
+            app.Contact.IsContactExist(0);
 
             List<ContactData> oldContacts = ContactData.GetAll();
             ContactData toBeModded = oldContacts[0];

@@ -17,15 +17,10 @@ namespace WebAddressbookTests
             testGroup.Header = "";
             testGroup.Footer = "";
 
-            app.Navigator.GoToGroupPage();
+            app.Groups.IsGroupExist(0);
 
             List<GroupData> oldGroups = GroupData.GetAll();
             GroupData toBeRemoved = oldGroups[0];
-
-            if (!app.Groups.IsGroupExist(0))
-            {
-                app.Groups.Create(testGroup);
-            }
 
             app.Groups.Remove(toBeRemoved);
 

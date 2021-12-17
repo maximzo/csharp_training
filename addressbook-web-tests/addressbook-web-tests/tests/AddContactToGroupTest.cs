@@ -12,9 +12,13 @@ namespace WebAddressbookTests
         [Test]
         public void TestAddContactToGroup()
         {
+            app.Groups.IsGroupExist(0);
+            app.Contact.IsContactExist(0);
+
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().Except(oldList).First();
+            app.Contact.IsContactExist(contact);
 
             app.Contact.AddContactToGroup(contact, group);
 
@@ -29,10 +33,17 @@ namespace WebAddressbookTests
         [Test]
         public void TestRemoveContactFromGroup()
         {
+            app.Groups.IsGroupExist(0);
+            app.Contact.IsContactExist(0);
+
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
-            
-            app.Contact.RemoveContactFromGroup(oldList[0], group);
+            ContactData contact = oldList.First();
+
+            app.Contact.IsContactExistInGroup(contact, group);
+            contact = oldList.First();
+
+            app.Contact.RemoveContactFromGroup(contact, group);
 
             List<ContactData> newList = group.GetContacts();
             oldList.RemoveAt(0);

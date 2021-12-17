@@ -143,10 +143,42 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public bool IsContactExist(int p)
+        //public bool IsContactExist(int p)
+        //{
+        //    manager.Navigator.OpenHomePage();
+        //    return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (p+2) + "]/td/input"));
+        //}
+
+        public ContactHelper IsContactExist(int p)
         {
             manager.Navigator.OpenHomePage();
-            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (p+2) + "]/td/input"));
+            if (!IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (p + 2) + "]/td/input")))
+            {
+                ContactData testContact = new ContactData("test", "test");
+                Create(testContact);
+            }
+            return this;
+        }
+
+        public ContactHelper IsContactExist(ContactData contact)
+        {
+            if (contact == null)
+            {
+                ContactData testContact = new ContactData("test", "test");
+                Create(testContact);
+            }
+            return this;
+        }
+
+        public ContactHelper IsContactExistInGroup(ContactData contact, GroupData group)
+        {
+            if (contact == null)
+            {
+                ContactData testContact = new ContactData("test", "test");
+                Create(testContact);
+                AddContactToGroup(testContact, group);
+            }
+            return this;
         }
 
         public ContactHelper OpenContactDetails(int dindex)

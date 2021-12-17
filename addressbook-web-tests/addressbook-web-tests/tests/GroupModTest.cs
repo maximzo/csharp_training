@@ -18,11 +18,7 @@ namespace WebAddressbookTests
             newData.Header = null;
             newData.Footer = null;
 
-            app.Navigator.GoToGroupPage();
-            if (!app.Groups.IsGroupExist(0))
-            {
-                app.Groups.Create(testGroup);
-            }
+            app.Groups.IsGroupExist(0);
 
             List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];
