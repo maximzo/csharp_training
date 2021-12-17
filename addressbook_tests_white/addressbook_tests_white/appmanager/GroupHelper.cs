@@ -37,6 +37,20 @@ namespace addressbook_tests_white
             return list;
         }
 
+        public int GetGroupCount()
+        {
+            int count = 0;
+            Window dialogue = OpenGroupsDialogue();
+            Tree tree = dialogue.Get<Tree>("uxAddressTreeView");
+            TreeNode root = tree.Nodes[0];
+            foreach (TreeNode item in root.Nodes)
+            {
+                count++;
+            }
+            CloseGroupsDialogue(dialogue);
+            return count;
+        }
+
         public void Add(GroupData newGroup)
         {
             Window dialogue = OpenGroupsDialogue();
@@ -69,6 +83,19 @@ namespace addressbook_tests_white
         private void CloseGroupsDialogue(Window dialogue)
         {
             dialogue.Get<Button>("uxCloseAddressButton").Click();
+        }
+
+        public GroupHelper IsGroupExist()
+        {
+            int count = GetGroupCount();
+
+            if (count <= 1)
+            {
+                GroupData testGroup = new GroupData();
+                testGroup.Name = "_OneElseGroup";
+                Add(testGroup);
+            }
+            return this;
         }
     }
 }
