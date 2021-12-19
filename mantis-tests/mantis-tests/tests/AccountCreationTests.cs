@@ -24,13 +24,20 @@ namespace mantis_tests
         {
             AccountData account = new AccountData()
             {
-                Name = "testuser7",
+                Name = "testuser",
                 Password = "password",
-                Email = "testuser7@localhost.localdomain"
+                Email = "testuser@localhost.localdomain"
             };
 
             List<AccountData> oldAccounts = AccountData.GetAll();
 
+            List<AccountData> accounts = app.Admin.GetAllAccounts();
+            AccountData existingAccount = accounts.Find(x => x.Name == account.Name);
+            if (existingAccount != null)
+            {
+                app.Admin.DeleteAccount(existingAccount);
+            }
+ 
             app.James.Delete(account);
             app.James.Add(account);
 
@@ -45,6 +52,7 @@ namespace mantis_tests
             app.Auth.Logout();
             app.Auth.Login(account);
             Assert.IsTrue(app.Auth.IsLoggedIn(account));
+            app.Auth.Logout();
         }
 
         [OneTimeTearDown]

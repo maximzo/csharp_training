@@ -12,9 +12,7 @@ namespace WebAddressbookTests
     public class ContactHelper : HelperBase
     {
 
-        public ContactHelper(AppManager manager) : base(manager)
-        {
-        }
+        public ContactHelper(AppManager manager) : base(manager) { }
 
         public ContactHelper Create(ContactData contact)
         {

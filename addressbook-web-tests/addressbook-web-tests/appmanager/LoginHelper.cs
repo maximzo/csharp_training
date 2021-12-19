@@ -12,9 +12,7 @@ namespace WebAddressbookTests
     public class LoginHelper : HelperBase
     {
 
-        public LoginHelper(AppManager manager) : base(manager)
-        {
-        }
+        public LoginHelper(AppManager manager) : base(manager) { }
         public void Login(AccountData account)
         {
             if (IsLoggedIn())

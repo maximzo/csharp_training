@@ -10,14 +10,16 @@ namespace mantis_tests
 {
     public class RegistrationHelper : HelperBase
     {
-        public RegistrationHelper(AppManager manager) : base(manager)
-        {
+        private string baseUrl;
 
+        public RegistrationHelper(AppManager manager, String baseUrl) : base(manager)
+        {
+            this.baseUrl = baseUrl;
         }
 
         public void Register(AccountData account)
         {
-            OpenMainPage();
+            //OpenMainPage();
             OpenRegistrationForm();
             FillRegistrationForm(account);
             SubmitRegistration();
@@ -28,11 +30,12 @@ namespace mantis_tests
 
         private void OpenMainPage()
         {
-            manager.Driver.Url = "http://localhost/mantisbt/login_page.php";
+            manager.Driver.Url = baseUrl + "/login_page.php";
         }
         private void OpenRegistrationForm()
         {
-            driver.FindElement(By.CssSelector("a.back-to-login-link")).Click(); ;
+            manager.Driver.Url = baseUrl + "/signup_page.php";
+            //driver.FindElement(By.CssSelector("a.back-to-login-link")).Click(); ;
         }
 
         private void FillRegistrationForm(AccountData account)

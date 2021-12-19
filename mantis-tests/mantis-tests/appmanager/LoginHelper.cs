@@ -9,9 +9,7 @@ namespace mantis_tests
 {
     public class LoginHelper : HelperBase
     {
-        public LoginHelper(AppManager manager) : base(manager)
-        {
-        }
+        public LoginHelper(AppManager manager) : base(manager) { }
 
         public void Login(AccountData account)
         {
@@ -25,10 +23,6 @@ namespace mantis_tests
             }
             driver.FindElement(By.Name("username")).SendKeys(account.Name);
             driver.FindElement(By.CssSelector("input.btn-success")).Click();
-
-            //new WebDriverWait(driver, TimeSpan.FromSeconds(10))
-            //    .Until(d => d.FindElements(By.Name("password")).Count() > 0);
-
             driver.FindElement(By.Name("password")).SendKeys(account.Password);
             driver.FindElement(By.CssSelector("input.btn-success")).Click();
         }

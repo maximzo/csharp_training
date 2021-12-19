@@ -20,6 +20,8 @@ namespace mantis_tests
             Password = password;
         }
 
+        [Column(Name = "id")]
+        public string Id { get; set; }
         [Column(Name = "username")]
         public string Name { get; set; }
         [Column(Name = "password")]

@@ -13,7 +13,7 @@ namespace mantis_tests
     public class AppManager
     {
         protected IWebDriver driver;
-        protected string baseURL;
+        protected string baseUrl;
 
         public RegistrationHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
@@ -22,21 +22,24 @@ namespace mantis_tests
         public LoginHelper Login { get; set; }
         public NavigationHelper Navigator { get; set; }
         public ProjectHelper Project { get; set; }
+        public AdminHelper Admin { get; set; }
+        public APIHelper API { get; set; }
 
         private static ThreadLocal<AppManager> app = new ThreadLocal<AppManager>();
 
         private AppManager()
         {
             driver = new ChromeDriver();
-            baseURL = "http://localhost/mantisbt";
-            Registration = new RegistrationHelper(this);
+            baseUrl = "http://localhost/mantisbt";
+            Registration = new RegistrationHelper(this, baseUrl);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
             Login = new LoginHelper(this);
-            Navigator = new NavigationHelper(this, baseURL);
+            Navigator = new NavigationHelper(this, baseUrl);
             Project = new ProjectHelper(this);
-
+            Admin = new AdminHelper(this, baseUrl);
+            API = new APIHelper(this);
         }
 
         ~AppManager()
@@ -56,7 +59,7 @@ namespace mantis_tests
             if (! app.IsValueCreated)
             {
                 AppManager newInstance = new AppManager();
-                newInstance.driver.Url = "http://localhost/mantisbt/login_page.php";
+                newInstance.driver.Url = newInstance.baseUrl + "/login_page.php";
                 app.Value = newInstance;
             }
             return app.Value;

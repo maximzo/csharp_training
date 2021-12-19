@@ -12,9 +12,7 @@ namespace WebAddressbookTests
     public class GroupHelper : HelperBase
     {
 
-        public GroupHelper(AppManager manager) : base(manager)
-        {
-        }
+        public GroupHelper(AppManager manager) : base(manager) { }
 
         public GroupHelper Create(GroupData group)
         {
