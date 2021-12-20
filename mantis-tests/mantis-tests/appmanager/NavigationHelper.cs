@@ -23,10 +23,20 @@ namespace mantis_tests
             }
             driver.Navigate().GoToUrl(baseURL);
         }
+        public void GoToManagmentPage()
+        {
+            if (driver.Url == baseURL + "/manage_overview_page.php"
+                && IsElementPresent(By.XPath("//a[contains(@href, '/mantisbt/manage_user_page.php')]")))
+            {
+                return;
+            }
+            driver.FindElement(By.XPath("//a[contains(@href, '/manage_overview_page.php')]")).Click();
+        }
 
         public void GoToProjectManagmentPage()
         {
-            driver.Navigate().GoToUrl(baseURL + "/manage_proj_page.php");
+            GoToManagmentPage();
+            driver.FindElement(By.XPath("//a[contains(@href, '/mantisbt/manage_proj_page.php')]")).Click();
         }
     }
 }

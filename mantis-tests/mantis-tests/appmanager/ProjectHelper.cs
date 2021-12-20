@@ -48,7 +48,7 @@ namespace mantis_tests
 
         public int GetProjectCount()
         {
-            //driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(3));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             return driver.FindElements(By.TagName("tbody"))[0].FindElements(By.TagName("tr")).Count;
         }
 
@@ -79,7 +79,7 @@ namespace mantis_tests
 
         public void InitProjectEdit(string name)
         {
-            //driver.Manage().Timeouts().ImplicitlyWait(TimeSpan.FromSeconds(2));
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.XPath("//*[@id='main-container']//a[contains(text(), '" + name + "')]")).Click();
         }
     }
