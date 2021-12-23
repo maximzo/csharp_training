@@ -51,7 +51,7 @@ namespace mantis_tests
 
             Assert.AreEqual(oldProjects.Count - 1, app.API.GetProjects(account).Count);
 
-            List<ProjectData> newProjects = ProjectData.GetAll();
+            List<ProjectData> newProjects = app.API.GetProjects(account);
 
             oldProjects.RemoveAt(0);
 

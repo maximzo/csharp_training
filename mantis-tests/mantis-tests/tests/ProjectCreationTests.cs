@@ -10,7 +10,7 @@ namespace mantis_tests
         [Test]
         public void CreateProjectTest()
         {
-            ProjectData project = new ProjectData("UICreatedProject3");
+            ProjectData project = new ProjectData("UICreatedProject4");
 
             List<ProjectData> oldProjects = ProjectData.GetAll();
 
@@ -31,14 +31,14 @@ namespace mantis_tests
             AccountData account = new AccountData("administrator", "administrator");
             ProjectData project = new ProjectData()
             {
-                Name = "APICreatedProject2"
+                Name = "APICreatedProject3"
             };
 
             List<ProjectData> oldProjects = app.API.GetProjects(account);
 
             app.API.CreateNewProject(account, project);
 
-            Assert.AreEqual(oldProjects.Count + 1, app.Project.GetProjectCount());
+            Assert.AreEqual(oldProjects.Count + 1, app.API.GetProjects(account).Count);
 
             List<ProjectData> newProjects = app.API.GetProjects(account);
             oldProjects.Add(project);
