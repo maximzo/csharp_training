@@ -40,14 +40,16 @@ namespace mantis_tests
                 Name = "test"
             };
 
-            List<ProjectData> oldProjects = app.API.GetProjects(account); ;
-            ProjectData toBeRemoved = oldProjects[0];
+            List<ProjectData> existingProjects = app.API.GetProjects(account); ;
 
-            app.API.IsProjectExist(oldProjects, account, project);
+            app.API.IsProjectExist(existingProjects, account, project);
+
+            List<ProjectData> oldProjects = app.API.GetProjects(account);
+            ProjectData toBeRemoved = oldProjects[0];
 
             app.Project.Remove(toBeRemoved);
 
-            Assert.AreEqual(oldProjects.Count - 1, app.Project.GetProjectCount());
+            Assert.AreEqual(oldProjects.Count - 1, app.API.GetProjects(account).Count);
 
             List<ProjectData> newProjects = ProjectData.GetAll();
 
